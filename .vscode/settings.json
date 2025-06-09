@@ -1,0 +1,13 @@
+{
+    "files.associations": {
+        "stdlib.h": "c",
+        "typeinfo": "c",
+        "cstdlib": "c",
+        "stdio.h": "c",
+        "string.h": "c",
+        "stdbool.h": "c"
+    },
+    "editor.inlineSuggest.edits.allowCodeShifting": "never",
+    "editor.inlineSuggest.enabled": false,
+    "editor.tabSize": 8
+}
