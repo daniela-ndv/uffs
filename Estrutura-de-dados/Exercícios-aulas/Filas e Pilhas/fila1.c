@@ -57,7 +57,7 @@ void deQueue(Queue *q, Item *item){
 void freeAll(Queue *q){
     EQueue *aux;
 
-    while (q->head != NULL){
+    while (!isEmpty){
         aux = q->head;
         q->head = q->head->next;
         free(aux);
