@@ -1,0 +1,62 @@
+
+Tarefa envolvendo Bubble e Insertion Sort: Responder às questões dos arquivos bubble.c e insertion.c (https://github.com/dbguilherme/POD)
+
+### Bubble
+
+Questão 0 - Verifique se as funções estão funcionando corretamente. Se não, faça a correção.
+- Estude o código.
+- Altere o valor de n para 1000000. O que pode estar acontecendo com o código?
+    Para n igual a 100, o programa rodou normalmente. Quando o n foi alterado para um valor muito grande (1000000), o programa travou (possível erro de segmentação). Isso pode acontecer devido ao empilhamento do vetor local na stack. Como as pilhas tem um limite  máximo, o vetor pode estourar esse limite e causar falhas.
+
+Questão 1 - Por que se deve alocar dinamicamente o vetor quando o n>>100 (grande)?
+    Na alocação dinâmica, a memória é alocada na heap. Diferente da alocação na pilha (stack), que tem um tamanho limitado e pode estourar, a heap tem muito mais espaço disponível. 
+
+Questão 2 - Qual a diferença entre &vet e vet?
+O “vet” (sem o &) é um ponteiro para o primeiro elemento do vetor (&vet[0]). Seu tipo é int *.
+	Já o “&vet”, é o endereço do vetor inteiro. É do tipo int (*)[n] (ponteiro para um array de n inteiros).
+
+Questão 3 - O que acontece se a função magica2 for chamada com o argumento &vet ao invés de vet?
+    A função magica2 espera int **. Passar &vet (do tipo int (*)[n]) não é compatível. Isso normalmente gera erro de compilação.
+
+Questão 4 - Por que o tempo de execução é bem menor na função?
+    As duas funções tem complexidade O(n²), mas existe diferença no número de comparações/trocas reais realizadas. “magica” faz uma ordenação do tipo selection sort (compara cada elemento com todos os outros e troca quando necessário). “magica2” faz uma ordenação do tipo bubble sort (troca apenas elementos adjacentes).
+O bubble sort (magica2) pode terminar mais rápido se o vetor já estiver parcialmente ordenado, pois ele "empurra" os maiores elementos para o final em cada passada.
+Já o selection sort (magica), sempre percorre todo o vetor para cada elemento, independentemente da ordem inicial, e pode fazer mais trocas desnecessárias.
+
+Questão 5 - O parâmetro desta função são valores ou ponteiros? Explique.
+	Na função, o n está sendo passado como valor. O ptr é um ponteiro que aponta para um endereço de memória, e é passado por referência. 
+	No caso da passagem por valor, uma cópia da variável é passada para a função. Já no caso do ponteiro, a passagem do endereço da variável original permite alterá-la diretamente, sem necessidade de cópias, porque o endereço é passado como argumento da função.
+
+Questão 6 - Está sendo realizada a troca de um valor ou um ponteiro?
+    Está sendo feita a troca de valores inteiros do vetor, não de ponteiros.
+    O ponteiro arr continua apontando para o mesmo bloco de memória (o vetor original). O que muda são os conteúdos (valores) armazenados nas posições do vetor.
+
+
+### Inserction
+
+1- Rode o código e verifique se está funcionando corretamente a partir do debug. 
+    O código está funcionando corretamente para vetores pequenos. Ele gera um vetor aleatório, ordena usando o algoritmo de inserção (insertion sort) e imprime o vetor ordenado e o tempo de execução.
+
+2- Crie uma variável para indicar quantas operações de comparação foram executadas pelo algortimo de bublle e pelo Insertion. Para a mesma entrada de 10000 elementos quantas comparações foram realizadas? 
+    Para 10000 elementos, o número de comparações do insertion sort depende da ordem inicial dos dados, mas no pior caso (vetor invertido) será aproximadamente:
+    Comparações = (n2 - n)/2 = 49995000.
+    Complexidade de O(n2).
+
+    Para o bubble sort, no pior caso, é o mesmo número de comparações:
+    Comparações = (n2 - n)/2 = 49995000.
+    Complexidade de O(n2).
+
+3- Quais são as diferenças entre os métodos bubble e insertion sort? 
+    O Bubble Sort percorre repetidamente, comparando elementos vizinhos e trocando-os de posição se estiverem fora de ordem, "empurrando" o maior para o final a cada passada. A cada passagem, o maior valor "sobe" para o final do vetor.
+	Já o Insertion sort, percorre da esquerda para a direita, inserindo cada elemento na posição correta entre os anteriores.Ele compara o elemento atual com seus vizinhos à esquerda e desloca os maiores para frente, até encontrar o local adequado.
+
+4- Existe algum caso em que o bubble é melhor que o sort em número de comparações?
+    Se o vetor já estiver ordenado, o bubble sort pode terminar antes (com poucas comparações, se for otimizado para parar quando não há trocas).
+    O insertion sort sempre faz pelo menos uma comparação por elemento, mesmo em vetores ordenados.
+    Outros casos, os dois métodos tem um desempenho igual em relação ao número de comparações.
+
+5 - Compute o tempo para fazer o ordenamento de um mesmo vetor randômico com 100000 valores usando o bubble e o insertion. 
+    Insertion: 6,223311 segundos
+    Bubble: 27,359076 segundos
+
+    O tempo de execução do Insertion Sort foi significativamente menor que o do Bubble Sort para 100.000 elementos. Isso acontece porque, apesar de ambos terem a mesma complexidade O(n²), o Insertion Sort faz menos trocas e aproveita melhor a ordenação parcial do vetor, enquanto o Bubble Sort realiza muitas trocas entre elementos vizinhos em todas as passagens.
