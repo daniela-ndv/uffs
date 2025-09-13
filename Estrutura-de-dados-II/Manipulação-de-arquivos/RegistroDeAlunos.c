@@ -4,19 +4,18 @@ Objetivo: Implementar as funções CRUD (Create, Read, Update, Delete) para um  
 O foco é a eficiência, realizando operações "in-place" (no local)  sempre que possível, sem reescrever o arquivo inteiro.
 
 Testes:
-
 1- Criar um arquivo inicial com 5 alunos 
     typedef struct {     int id;     char nome[TAMANHO_NOME];     float media;     int ativo; // 1 para ativo, 0 para "apagado" (deleção lógica) } Aluno;
 2- Listar todos os alunos ativos 
 3- Atualizar a média do aluno com ID 3 para 9.5
 4- Apagar (logicamente) o aluno com ID 2 (de 1 para 0)
-5-  Atualizar um aluno que não existe (ID 99)
+5- Atualizar um aluno que não existe (ID 99)
  
 PS: cada função deve considerar que os dados estão somente no arquivo
 */
 
 #include <stdio.h>
-#include <string.h>
+#include <stddef.h> // Para usar offsetof
 
 #define TAMANHO_NOME 50
 #define NOME_ARQUIVO "file.txt"
@@ -74,18 +73,36 @@ void atualizarMediaAluno(int id, float novaMedia) {
     }
 
     Aluno aluno;
+    long int posicaoRegistro = -1; // COnsidera inicialmente não encontrado
     int encontrado = 0;
-    while(fread(&aluno, sizeof(Aluno), 1, file) == 1){
-        if(aluno.id == id){
-            aluno.media = novaMedia;
-            fseek(file, -sizeof(Aluno), SEEK_CUR);
-            fwrite(&aluno, sizeof(Aluno), 1, file);
+
+    // Percorre o arquivo para encontrar o aluno pelo ID
+    while (fread(&aluno, sizeof(Aluno), 1, file) == 1) {
+        if (aluno.id == id) {
             encontrado = 1;
-            printf("Média do aluno ID %d atualizada para %.2f\n", id, novaMedia);
+            // Quando o aluno é encontrado, 'ftell(file)' está no fim do registro lido.
+            // Para obter o início do registro, subtraímos sizeof(Aluno).
+            posicaoRegistro = ftell(file) - sizeof(Aluno); 
             break;
         }
     }
-    if(!encontrado) printf("Aluno com ID %d não encontrado.\n", id);
+
+    if(encontrado) {
+        // Calcula o offset (deslocamento) do campo 'media' dentro da struct Aluno
+        // offsetof() retorna a posição exata da 'media' a partir do início da struct
+        size_t offsetMedia = offsetof(Aluno, media);
+
+        long posicaoAbsolutaMediaNoArquivo = posicaoRegistro + offsetMedia;
+        // Move o ponteiro do arquivo para a posição onde a 'media' começa
+        fseek(file, posicaoAbsolutaMediaNoArquivo, SEEK_SET);
+
+        fwrite(&novaMedia, sizeof(float), 1, file);
+
+        printf("Média do aluno ID %d atualizada para %.2f\n", id, novaMedia);
+    } else {
+        printf("Aluno com ID %d não encontrado.\n", id);
+    }
+
     fclose(file);
 }
 
