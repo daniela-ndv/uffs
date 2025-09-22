@@ -18,13 +18,13 @@ public class Agenda {
         } else{
             for(int i = 0; i < contPessoas; i++){
                 System.out.println("\n Pessoa " + (i+1) + ":");
-                this.pessoas[i].imprimePessoa();
+                this.pessoas[i].imprime();
             }
         }
     }
 
     Pessoa buscaPessoa(String nome){
-        Pessoa p = new Pessoa();
+        Pessoa p = null;
         for(int i = 0; i < contPessoas; i++){
             if(this.pessoas[i].nome.equals(nome)){
                 p = pessoas[i];

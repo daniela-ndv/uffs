@@ -125,15 +125,13 @@ public class Main {
                 break;
             }
 
-            Pessoa pessoa = new Pessoa();
+            Pessoa pessoa = agenda.buscaPessoa(nome);
 
-            pessoa = agenda.buscaPessoa(nome);
-
-            if(pessoa.nome == null){
+            if(pessoa == null){
                 System.out.println("\n=> Pessoa não encontrada na agenda!\n");
             } else {
                 System.out.println("\n=> Pessoa encontrada!");
-                pessoa.imprimePessoa();
+                pessoa.imprime();
                 System.out.print("\n");
             }
         }
