@@ -1,14 +1,38 @@
 public class Pessoa {
-    final int TAM_CONTATOS = 4;
-    int contContatos = 0;
+    private final int TAM_CONTATOS = 4;
+    private int contContatos = 0;
 
-    String nome;
-    Data data;
-    Contato[] contatos = new Contato[TAM_CONTATOS];
+    private String nome;
+    private Data data;
+    private Contato[] contatos = new Contato[TAM_CONTATOS];
     
     Pessoa(String nome, Data data){
         this.nome = nome;
         this.data = data;
+    }
+
+    String getNome(){
+        return this.nome;
+    }
+
+    void setNome(String n){
+        this.nome = n;
+    }
+
+    Data getData(){
+        return this.data;
+    }
+
+    void setData(Data d){
+        this.data = d;
+    }
+
+    Contato[] getContatos(){
+        return this.contatos;
+    }
+
+    void setContatos(Contato[] c){
+        this.contatos = c;
     }
 
     void cadastraContato(Contato c){

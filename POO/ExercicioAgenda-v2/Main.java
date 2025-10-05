@@ -1,4 +1,4 @@
-/* Exercício de cadastro de agenda utilizando construtores */
+/* Exercício de cadastro de agenda utilizando construtores, getters e setters*/
 
 import java.util.Scanner;
 
@@ -20,17 +20,12 @@ public class Main {
         d5.imprime();
 
         Contato c1 = new Contato(true, false, "12900000000");
-        System.out.println(Contato.qtdTotalContatos);
         Contato c2 = new Contato(true, false, "109123456789"); 
-        Contato.imprimeQtdContatos(); 
-        
         Contato c3 = new Contato(false, true, "49999999999"); 
         Contato c4 = new Contato(false, false, "0000000000"); 
         Contato c5 = new Contato(true, true, "23111111111"); 
         Contato c6 = new Contato(true, false, "1122222222"); 
         Contato c7 = new Contato(true, true, "11911111111"); 
-
-        Contato.imprimeQtdContatos(); 
 
         Pessoa p1 = new Pessoa("Fulano de Tal", d1); 
         Pessoa p2 = new Pessoa("Beltrano", d2); 
@@ -51,6 +46,9 @@ public class Main {
         agenda.cadastraPessoa(p3);
         agenda.cadastraPessoa(p4);
         agenda.cadastraPessoa(p5);
+
+        System.out.println("\nNome: " + p5.getNome());
+        System.out.println("Dia: " + p5.getData().getDia() + "/" + p5.getData().getMes() + "/" + p5.getData().getAno() + "\n");
         
         System.out.println("##### Pessoas cadastradas na agenda #####");
         System.out.println("\n*****************************************");
@@ -77,6 +75,7 @@ public class Main {
                 System.out.print("\n");
             }
         }
+
 
         scanner.close();        
     }

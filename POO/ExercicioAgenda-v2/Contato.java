@@ -1,7 +1,7 @@
 public class Contato {
-    boolean ehTelegram;
-    boolean ehWhatsapp;
-    String numero;
+    private boolean ehTelegram;
+    private boolean ehWhatsapp;
+    private String numero;
     static int qtdTotalContatos;
 
     Contato(boolean ehTelegram, boolean ehWhatsapp, String numero){
@@ -9,6 +9,30 @@ public class Contato {
         this.ehWhatsapp = ehWhatsapp;
         this.numero = numero;
         qtdTotalContatos++;
+    }
+
+    boolean getEhTelegram(){
+        return this.ehTelegram;
+    }
+
+    void setEhTelegram(boolean t){
+        this.ehTelegram = t;
+    }
+
+    boolean getEhWhatsapp(){
+        return this.ehWhatsapp;
+    }
+
+    void setEhWhatsapp(boolean w){
+        this.ehWhatsapp = w;
+    }
+
+    String getNumero(){
+        return this.numero;
+    }
+
+    void setNumero(String n){
+        this.numero = n;
     }
 
     static void imprimeQtdContatos(){

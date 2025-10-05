@@ -1,10 +1,18 @@
 public class Agenda {
-    final int TAM_PESSOAS = 15;
-    Pessoa[] pessoas = new Pessoa[TAM_PESSOAS];
-    int contPessoas = 0;
+    private final int TAM_PESSOAS = 15;
+    private Pessoa[] pessoas = new Pessoa[TAM_PESSOAS];
+    private int contPessoas = 0;
 
     Agenda(){
         
+    }
+
+    Pessoa[] getPessoas(){
+        return this.pessoas;
+    }
+
+    void setPessoas(Pessoa[] p){
+        this.pessoas = p;
     }
 
     void cadastraPessoa(Pessoa p){
@@ -30,7 +38,7 @@ public class Agenda {
     Pessoa buscaPessoa(String nome){
         Pessoa p = null;
         for(int i = 0; i < contPessoas; i++){
-            if(this.pessoas[i].nome.equals(nome)){
+            if(this.pessoas[i].getNome().equals(nome)){
                 p = pessoas[i];
             } 
         }

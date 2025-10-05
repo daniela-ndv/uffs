@@ -1,9 +1,9 @@
 import java.time.LocalDate;
 
 public class Data {
-    int dia;
-    int mes;
-    int ano;
+    private int dia;
+    private int mes;
+    private int ano;
 
     Data(){
         this.dia = LocalDate.now().getDayOfMonth();
@@ -15,6 +15,30 @@ public class Data {
         this.dia = dia;
         this.mes = mes;
         this.ano = ano;
+    }
+
+    int getDia(){
+        return this.dia;
+    }
+
+    void setDia(int d){
+        this.dia = d;
+    }
+
+    int getMes(){
+        return this.mes;
+    }
+
+    void setMes(int m){
+        this.mes = m;
+    }
+
+    int getAno(){
+        return this.ano;
+    }
+
+    void setAno(int a){
+        this.ano = a;
     }
 
     void imprime(){
