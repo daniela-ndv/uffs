@@ -1,4 +1,4 @@
-package exemplos;
+package introdução.exemplos;
 public class Quadrado {
     double lado;
 

@@ -122,8 +122,8 @@ void gerarArrayAleatorio(int *arr, int n) {
 int main() {
     srand(time(NULL));
     
-    int tamanhos[] = {10, 100}; // 100, 1000, 5000, 10000, 50000, 100000
-    int numTamanhos = 2; // 6
+    int tamanhos[] = {100, 1000, 5000, 10000, 50000, 100000}; 
+    int numTamanhos = 6; 
     int numExecucoes = 3;
         
     long long trocasBubble[numTamanhos];

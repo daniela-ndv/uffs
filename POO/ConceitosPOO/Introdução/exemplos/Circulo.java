@@ -1,4 +1,4 @@
-package exemplos;
+package introdução.exemplos;
 public class Circulo {
     final double PI = 3.1415;
     double raio;
