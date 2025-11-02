@@ -1,0 +1,10 @@
+Classe concreta ou abstrata?
+
+- Classe Arvore
+-- Em uma aplicação de visualização de árvores?
+---- A aplicação permite a visualização de diferentes tipos de árvores.
+=> Classe abstrata, pois a classe Arvore serve como um modelo para as demais árvores, que tem cores, espécies, formas, comportamentos, etc diferentes.
+
+-- Em um jogo de golfe?
+---- Em um campo de golfe do jogo, existem árvores.
+=> Classe concreta. Nesse cenário, a árvore é mais geneŕica, suas características relevantes podem ser posição, tamanho, ações, etc.
