@@ -1,0 +1,26 @@
+info:
+  name: POST - Criar nova
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{baseUrl}}/api/disciplinas"
+  headers:
+    - name: Content-Type
+      value: application/json
+  body:
+    type: json
+    data: |-
+      {
+        "nome": "Banco de Dados",
+        "codigo": "CC110",
+        "cargaHoraria": 65
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
