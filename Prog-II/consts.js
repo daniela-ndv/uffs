@@ -1,4 +1,4 @@
-RESP_HTTP = {
+const RESP_HTTP = {
     // Classe 2xx - Sucesso
     OK: 200,
     CREATED: 201,
