@@ -1,5 +1,5 @@
 // index.js servidor Express mínimo
-const app = require('./app');
+const app = require('./src/app');
 
 // Define a porta usa variável de ambiente ou 3000 como fallback
 const PORTA = process.env.PORT || 3000;

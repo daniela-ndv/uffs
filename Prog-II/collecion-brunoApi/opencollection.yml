@@ -1,0 +1,30 @@
+opencollection: 1.0.0
+
+info:
+  name: API Prog II
+config:
+  proxy:
+    inherit: true
+    config:
+      protocol: http
+      hostname: ""
+      port: ""
+      auth:
+        username: ""
+        password: ""
+      bypassProxy: ""
+
+request:
+  variables:
+    - name: baseUrl
+      value: http://localhost:3000
+
+docs:
+  content: Collection completa para testar as rotas de alunos e disciplinas
+  type: text/markdown
+bundled: false
+extensions:
+  bruno:
+    ignore:
+      - node_modules
+      - .git
