@@ -21,6 +21,27 @@ function validarMatricula(matricula) {
     return /^\d{7}$/.test(matricula);
 }
 
+function validarCamposObrigatoriosAluno(dados){
+    if (!dados.nome || !dados.matricula || !dados.curso) {
+        throw new Error('Campos obrigatórios ausentes');
+    }
+}
+
+function validarMatriculaUnica(matricula, idIgnorado = null) {
+    // Em PUT, ignora o próprio registro para permitir manter a mesma matrícula
+    const existe = alunos.find(a => a.matricula === matricula && a.id !== idIgnorado);
+    if (existe) throw new Error('Matrícula já cadastrada');
+}
+
+function validarAluno(dados, idIgnorado = null) {
+    // Reutiliza as mesmas regras para POST e PUT, variando só o id ignorado
+    validarCamposObrigatoriosAluno(dados);
+    if (!validarMatricula(dados.matricula)) {
+        throw new Error('Formato de matrícula inválido');
+    }
+    validarMatriculaUnica(dados.matricula, idIgnorado);
+}
+
 function listarTodos(filtros = {}) {
     let resultado = [...alunos];
     if (filtros.curso) {
@@ -34,14 +55,7 @@ function buscarPorId(id) {
 }
 
 function criar(dados) {
-    if (!dados.nome || !dados.matricula || !dados.curso) {
-        throw new Error('Campos obrigatórios ausentes');
-    }
-    if (!validarMatricula(dados.matricula)) {
-        throw new Error('Formato de matrícula inválido');
-    }
-    const existe = alunos.find(a => a.matricula === dados.matricula);
-    if (existe) throw new Error('Matrícula já cadastrada');
+    validarAluno(dados);
 
     const novoAluno = { id: proximoId++, ...dados };
     alunos.push(novoAluno);
@@ -53,16 +67,8 @@ function atualizar(id, dados) {
     const idx = alunos.findIndex(a => a.id === id);
     if (idx === -1) return null;
 
-    if (!dados.nome || !dados.matricula || !dados.curso) {
-        throw new Error('Campos obrigatórios ausentes para PUT');
-    }
-
-    if (!validarMatricula(dados.matricula)) {
-        throw new Error('Formato de matrícula inválido');
-    }
-
-    const existe = alunos.find(a => a.matricula === dados.matricula && a.id !== id);
-    if (existe) throw new Error('Matrícula já cadastrada');
+    // Passa o id atual para não detectar o próprio aluno como duplicado
+    validarAluno(dados, id);
 
     alunos[idx] = {
         id,

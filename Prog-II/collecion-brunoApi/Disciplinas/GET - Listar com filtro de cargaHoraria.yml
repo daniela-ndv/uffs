@@ -1,0 +1,19 @@
+info:
+  name: GET - Listar com filtro de cargaHoraria
+  type: http
+  seq: 7
+
+http:
+  method: GET
+  url: "{{baseUrl}}/api/disciplinas?cargaHoraria=60"
+  params:
+    - name: cargaHoraria
+      value: "60"
+      type: query
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

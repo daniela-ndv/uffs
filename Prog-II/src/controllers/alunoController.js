@@ -11,8 +11,8 @@ function listar(req, res) {
 }
 
 function buscar(req, res) {
-    const id = parseInt(req.params.id);
-    if (isNaN(id)) return res.status(RESP_HTTP.BAD_REQUEST).json({ erro: 'ID inválido' });
+    const id = helper.obterId(req, res);
+    if (id === null) return;
     const aluno = AlunoModel.buscarPorId(id);
     if (!aluno) return res.status(RESP_HTTP.NOT_FOUND).json({ erro: 'Aluno não encontrado' });
     res.status(RESP_HTTP.OK).json(aluno);
@@ -43,21 +43,24 @@ function criar(req, res) {
 }
 
 function atualizar(req, res) {
-    const id = parseInt(req.params.id);
+    const id = helper.obterId(req, res);
+    if (id === null) return;
     const aluno = AlunoModel.atualizar(id, req.body);
     if (!aluno) return res.status(RESP_HTTP.NOT_FOUND).json({ erro: 'Aluno não encontrado' });
     res.status(RESP_HTTP.OK).json(aluno);
 }
 
 function atualizarParcial(req, res) {
-    const id = parseInt(req.params.id);
+    const id = helper.obterId(req, res);
+    if (id === null) return;
     const aluno = AlunoModel.atualizarParcial(id, req.body);
     if (!aluno) return res.status(RESP_HTTP.NOT_FOUND).json({ erro: 'Aluno não encontrado' });
     res.status(RESP_HTTP.OK).json(aluno);
 }
 
 function remover(req, res) {
-    const id = parseInt(req.params.id);
+    const id = helper.obterId(req, res);
+    if (id === null) return;
     const ok = AlunoModel.remover(id);
     if (!ok) return res.status(RESP_HTTP.NOT_FOUND).json({ erro: 'Aluno não encontrado' });
     res.status(RESP_HTTP.NO_CONTENT).send();
