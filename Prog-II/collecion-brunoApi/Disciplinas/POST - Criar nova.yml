@@ -13,9 +13,9 @@ http:
     type: json
     data: |-
       {
-        "nome": "Banco de Dados",
+        "nome": "Banco de Dados II",
         "codigo": "CC110",
-        "cargaHoraria": 65
+        "cargaHoraria": 60
       }
   auth: inherit
 

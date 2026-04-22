@@ -3,15 +3,16 @@
 
 const DisciplinaModel = require('../models/disciplinaModel');
 const RESP_HTTP = require('../../consts');
+const helper = require('./helpers');
 
 function listar(req, res){
     const disciplinas = DisciplinaModel.listarTodos(req.query);
-    res.status(RESP_HTTP.OK).json({ total: disciplinas.lenght, disciplinas});
+    res.status(RESP_HTTP.OK).json({ total: disciplinas.length, disciplinas});
 }
 
 function buscar(req, res) {
-    const id = parseInt(req.params.id);
-    if (isNaN(id)) return res.status(RESP_HTTP.BAD_REQUEST).json({ erro: 'ID inválido' });
+    const id = helper.obterId(req, res);
+    if (id === null) return;
     const disciplina = DisciplinaModel.buscarPorId(id);
     if (!disciplina) return res.status(RESP_HTTP.NOT_FOUND).json({ erro: 'Disciplina não encontrada' });
     res.status(RESP_HTTP.OK).json(disciplina);
@@ -27,14 +28,16 @@ function criar(req, res) {
 }
 
 function atualizar(req, res) {
-    const id = parseInt(req.params.id);
+    const id = helper.obterId(req, res);
+    if (id === null) return;
     const disciplina = DisciplinaModel.atualizar(id, req.body);
     if (!disciplina) return res.status(RESP_HTTP.NOT_FOUND).json({ erro: 'Disciplina não encontrada' });
     res.status(RESP_HTTP.OK).json(disciplina);
 }
 
 function remover(req, res) {
-    const id = parseInt(req.params.id);
+    const id = helper.obterId(req, res);
+    if (id === null) return;
     const ok = DisciplinaModel.remover(id);
     if (!ok) return res.status(RESP_HTTP.NOT_FOUND).json({ erro: 'Disciplina não encontrada' });
     res.status(RESP_HTTP.NO_CONTENT).send();

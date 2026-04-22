@@ -1,14 +1,14 @@
 info:
-  name: GET - Listar com filtro de código
+  name: GET - Listar com filtro de nome
   type: http
   seq: 2
 
 http:
   method: GET
-  url: "{{baseUrl}}/api/disciplinas?codigo=CC104"
+  url: "{{baseUrl}}/api/disciplinas?nome=Algortimos avançados"
   params:
-    - name: codigo
-      value: CC104
+    - name: nome
+      value: Algortimos avançados
       type: query
   auth: inherit
 
