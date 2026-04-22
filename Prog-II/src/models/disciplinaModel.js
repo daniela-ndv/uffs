@@ -7,12 +7,47 @@ let disciplinas = [
 ];
 let proximoId = 3;
 
+function normalizarCodigo(codigo) {
+    return typeof codigo === 'string' ? codigo.toUpperCase() : codigo;
+}
+
+function normalizarNome(nome) {
+    return typeof nome === 'string' ? nome.trim().toLowerCase() : nome;
+}
+
+function validarCamposObrigatoriosDisciplina(dados) {
+    if (!dados.nome || !dados.codigo || !dados.cargaHoraria) {
+        throw new Error('Campos obrigatórios ausentes');
+    }
+}
+
+// Em atualização, ignora o próprio id para não gerar falso duplicado
+function validarCodigoUnico(codigo, idIgnorado = null) {
+    const codigoNormalizado = normalizarCodigo(codigo);
+    const existe = disciplinas.find(a => a.codigo === codigoNormalizado && a.id !== idIgnorado);
+    if (existe) throw new Error('Código já cadastrado');
+}
+
+function validarDisciplina(dados, idIgnorado = null) {
+    validarCamposObrigatoriosDisciplina(dados);
+    validarCodigoUnico(dados.codigo, idIgnorado);
+}
 
 function listarTodos(filtros = {}) {
     let resultado = [...disciplinas];
-    if (filtros.codigo) {
-        resultado = resultado.filter(a => a.codigo === filtros.codigo.toUpperCase());
+
+    if (filtros.cargaHoraria !== undefined) {
+        const cargaHoraria = Number.parseInt(filtros.cargaHoraria, 10);
+        if (!Number.isNaN(cargaHoraria)) {
+            resultado = resultado.filter(a => a.cargaHoraria === cargaHoraria);
+        }
     }
+
+    if (filtros.nome) {
+        const nome = normalizarNome(filtros.nome);
+        resultado = resultado.filter(a => normalizarNome(a.nome) === nome);
+    }
+
     return resultado;
 }
 
@@ -21,14 +56,8 @@ function buscarPorId(id) {
 }
 
 function criar(dados) {
-    if (!dados.nome || !dados.codigo || !dados.cargaHoraria) {
-        throw new Error('Campos obrigatórios ausentes');
-    }
-
-    const existe = disciplinas.find(a => a.codigo === dados.codigo);
-    if (existe) throw new Error('Código já cadastrado');
-
     const novaDisciplina = { id: proximoId++, ...dados };
+    validarDisciplina(novaDisciplina);
     disciplinas.push(novaDisciplina);
     return novaDisciplina;
 }
@@ -36,7 +65,11 @@ function criar(dados) {
 function atualizar(id, dados) {
     const idx = disciplinas.findIndex(a => a.id === id);
     if (idx === -1) return null;
-    disciplinas[idx] = { ...disciplinas[idx], ...dados, id };
+
+    const disciplinaAtualizada = { ...disciplinas[idx], ...dados, id };
+    validarDisciplina(disciplinaAtualizada, id);
+
+    disciplinas[idx] = disciplinaAtualizada;
     return disciplinas[idx];
 }
 
