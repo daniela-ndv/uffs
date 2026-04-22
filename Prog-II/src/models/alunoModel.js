@@ -1,11 +1,20 @@
 // O Model encapsula TODA a lógica de dados.
 // O Controller nunca acessa o banco diretamente.
 
+const DisciplinaModel = require('./disciplinaModel');
+
 let alunos = [
     { id: 1, nome: 'Ana Souza', matricula: '2024001', curso: 'CC' },
     { id: 2, nome: 'Bruno Lima', matricula: '2024002', curso: 'CC' },
 ];
 let proximoId = 3;
+
+// Relação simples aluno -> disciplinas para o exercício de Promise.all
+const matriculasPorAluno = [
+    { alunoId: 1, disciplinaId: 1 },
+    { alunoId: 1, disciplinaId: 2 },
+    { alunoId: 2, disciplinaId: 2 },
+];
 
 // Regra de negócio centralizada aqui (DRY!)
 function validarMatricula(matricula) {
@@ -80,4 +89,32 @@ function remover(id) {
     return true;
 }
 
-module.exports = { listarTodos, buscarPorId, criar, atualizar, atualizarParcial, remover };
+async function buscarAlunoAsync(alunoId) {
+    const aluno = buscarPorId(alunoId);
+    if (!aluno) {
+        throw new Error('Aluno não encontrado');
+    }
+    return aluno;
+}
+
+async function buscarDisciplinasDoAlunoAsync(alunoId) {
+    const disciplinaIds = matriculasPorAluno
+        .filter(m => m.alunoId === alunoId)
+        .map(m => m.disciplinaId);
+
+    const disciplinas = DisciplinaModel.listarTodos();
+    return disciplinas.filter(d => disciplinaIds.includes(d.id));
+}
+
+async function buscarDadosCompletos(alunoId) {
+    // Promise.all(): aguarda TODAS as Promises. Se uma falhar, rejeita tudo
+    // Ideal quando todas as operações são necessárias e independentes
+    const [aluno, disciplinas] = await Promise.all([
+        buscarAlunoAsync(alunoId),
+        buscarDisciplinasDoAlunoAsync(alunoId),
+    ]);
+
+    return { aluno, disciplinas };
+}
+
+module.exports = {listarTodos, buscarPorId, criar, atualizar, atualizarParcial, remover, buscarDadosCompletos };
