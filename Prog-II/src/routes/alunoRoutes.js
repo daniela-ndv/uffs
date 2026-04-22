@@ -5,6 +5,7 @@ const router = express.Router();
 const AlunoController = require('../controllers/alunoController');
 
 router.get('/', AlunoController.listar);
+router.get('/:id/completo', AlunoController.buscarCompleto);
 router.get('/:id', AlunoController.buscar);
 router.post('/', AlunoController.criar);
 router.put('/:id', AlunoController.atualizar);

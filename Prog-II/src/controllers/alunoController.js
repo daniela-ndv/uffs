@@ -18,6 +18,21 @@ function buscar(req, res) {
     res.status(RESP_HTTP.OK).json(aluno);
 }
 
+async function buscarCompleto(req, res) {
+    const id = helper.obterId(req, res);
+    if (id === null) return;
+
+    try {
+        const dados = await AlunoModel.buscarDadosCompletos(id);
+        res.status(RESP_HTTP.OK).json(dados);
+    } catch (err) {
+        if (err.message === 'Aluno não encontrado') {
+            return res.status(RESP_HTTP.NOT_FOUND).json({ erro: err.message });
+        }
+        res.status(RESP_HTTP.INTERNAL_SERVER_ERROR).json({ erro: 'Erro interno ao buscar dados completos' });
+    }
+}
+
 function criar(req, res) {
     try {
         const novoAluno = AlunoModel.criar(req.body);
@@ -51,4 +66,4 @@ function remover(req, res) {
     res.status(RESP_HTTP.NO_CONTENT).send();
 }
 
-module.exports = { listar, buscar, criar, atualizar, atualizarParcial, remover };
+module.exports = { listar, buscar, buscarCompleto, criar, atualizar, atualizarParcial, remover };
