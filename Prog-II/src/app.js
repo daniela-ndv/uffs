@@ -9,4 +9,10 @@ app.use(express.json());
 app.use('/api/alunos', alunoRoutes);
 app.use('/api/disciplinas', disciplinaRoutes);
 
+// handler global de erros
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(err.statusCode || 500).json({ erro: err.message || 'Erro interno' });
+});
+
 module.exports = app;

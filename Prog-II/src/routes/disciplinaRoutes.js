@@ -3,11 +3,12 @@
 const express = require('express');
 const router = express.Router();
 const DisciplinaController = require('../controllers/disciplinaCotroller');
+const { asyncHandler } = require('../controllers/helpers');
 
-router.get('/', DisciplinaController.listar);
-router.get('/:id', DisciplinaController.buscar);
-router.post('/', DisciplinaController.criar);
-router.put('/:id', DisciplinaController.atualizar);
-router.delete('/:id', DisciplinaController.remover);
+router.get('/', asyncHandler(DisciplinaController.listar));
+router.get('/:id', asyncHandler(DisciplinaController.buscar));
+router.post('/', asyncHandler(DisciplinaController.criar));
+router.put('/:id', asyncHandler(DisciplinaController.atualizar));
+router.delete('/:id', asyncHandler(DisciplinaController.remover));
 
 module.exports = router;
