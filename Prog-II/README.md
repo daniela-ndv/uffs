@@ -1,6 +1,6 @@
 # API REST 
 
-Projeto de API REST desenvolvido com Node.js e Express, organizado em padrao MVC.
+Projeto de API REST desenvolvido com Node.js, Express e Sequelize, organizado em padrao MVC.
 
 ## Conteudos trabalhados
 
@@ -10,7 +10,8 @@ Projeto de API REST desenvolvido com Node.js e Express, organizado em padrao MVC
 - Principio DRY
 - Promises e `Promise.all`
 - Tratamento global de erros
-
+- ORM (Object-Relational Mapper) — Sequelize
+- pg-promise
 
 ## Como executar
 
@@ -38,6 +39,45 @@ Servidor padrão: `http://localhost:3000`
 
 - `npm start`: inicia com Node.
 - `npm run dev`: inicia com Nodemon.
+
+## Banco de dados (Sequelize + PostgreSQL)
+
+- Gerar migration para aluno:
+
+```bash
+npx sequelize-cli migration:generate --name create-aluno
+```
+
+- Gerar migration para curso:
+
+```bash
+npx sequelize-cli migration:generate --name create-curso
+```
+
+- Gerar migration para matricula:
+
+```bash
+npx sequelize-cli migration:generate --name create-matricula
+```
+
+- Rodar migration:
+
+```bash
+npx sequelize-cli db:migrate
+```
+
+- (Opcional) verificar status das migrations:
+
+```bash
+npx sequelize-cli db:migrate:status
+```
+
+## PostgreSQL
+
+```bash
+# Acessar com usuário postgres do sistema
+sudo -u postgres psql -d prog2
+```
 
 
 ## Base URL

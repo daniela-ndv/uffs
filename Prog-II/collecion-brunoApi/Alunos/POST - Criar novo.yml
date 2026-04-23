@@ -15,7 +15,8 @@ http:
       {
         "nome": "Ciclano de tal",
         "matricula": "2024111",
-        "curso": "CC"
+        "curso": "CC",
+        "id_curso": 1
       }
   auth: inherit
 

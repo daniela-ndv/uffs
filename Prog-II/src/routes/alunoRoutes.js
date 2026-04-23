@@ -3,7 +3,7 @@
 const express = require('express');
 const router = express.Router();
 const AlunoController = require('../controllers/alunoController');
-const { asyncHandler } = require('../controllers/helpers');
+const { asyncHandler } = require('../middlewares/asyncHandler');
 
 router.get('/', asyncHandler(AlunoController.listar));
 router.get('/:id/completo', asyncHandler(AlunoController.buscarCompleto));

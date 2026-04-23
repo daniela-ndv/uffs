@@ -1,69 +1,118 @@
 // O Controller só sabe: receber req, chamar o Model, enviar res.
 // Não contém lógica de negócio nem queries SQL.
 
-const AlunoModel = require('../models/alunoModel');
+const db = require('../models');
+const { Op } = require('sequelize');
 const RESP_HTTP = require('../../consts');
 const helper = require('./helpers');
 
-function listar(req, res) {
-    const alunos = AlunoModel.listarTodos(req.query);
-    res.status(RESP_HTTP.OK).json({ total: alunos.length, alunos });
+async function listar(req, res) {
+    try{
+        const { nome, pagina = 1, porPagina = 20 } = req.query;
+        const where = {};
+        if (nome) where.nome = { [Op.iLike]: '%' + nome + '%' };
+
+        const { count, rows } = await db.Aluno.findAndCountAll({
+            where,
+            include: [{ model: db.Curso}],
+            limit: parseInt(porPagina),
+            offset: (parseInt(pagina) - 1) * parseInt(porPagina),
+            order: [['nome', 'ASC']],
+        });
+        res.status(RESP_HTTP.OK).json({ total: count, pagina: parseInt(pagina), alunos: rows });
+    } catch (err) {
+        throw err;
+    }
 }
 
-function buscar(req, res) {
-    const id = helper.obterId(req, res);
-    if (id === null) return;
-    const aluno = AlunoModel.buscarPorId(id);
-    if (!aluno) return res.status(RESP_HTTP.NOT_FOUND).json({ erro: 'Aluno não encontrado' });
-    res.status(RESP_HTTP.OK).json(aluno);
+async function buscar(req, res) {
+    try {
+        const id = helper.obterId(req, res);
+        if (id === null) return;
+
+        const aluno = await db.Aluno.findByPk(id);
+        if (!aluno) return res.status(RESP_HTTP.NOT_FOUND).json({ erro: 'Aluno não encontrado' });
+        res.status(RESP_HTTP.OK).json(aluno);
+    } catch (err) {
+        throw err;
+    }
 }
 
 async function buscarCompleto(req, res) {
-    const id = helper.obterId(req, res);
-    if (id === null) return;
-
     try {
-        const dados = await AlunoModel.buscarDadosCompletos(id);
-        res.status(RESP_HTTP.OK).json(dados);
+        const id = helper.obterId(req, res);
+        if (id === null) return;
+
+        const aluno = await db.Aluno.findByPk(id, {
+            include: [
+                { model: db.Curso },
+                { model: db.Matricula },
+            ],
+        });
+        if (!aluno) return res.status(RESP_HTTP.NOT_FOUND).json({ erro: 'Aluno não encontrado' });
+        res.status(RESP_HTTP.OK).json(aluno);
     } catch (err) {
-        if (err.message === 'Aluno não encontrado') {
-            return res.status(RESP_HTTP.NOT_FOUND).json({ erro: err.message });
-        }
-        res.status(RESP_HTTP.INTERNAL_SERVER_ERROR).json({ erro: 'Erro interno ao buscar dados completos' });
+        throw err;
     }
 }
 
-function criar(req, res) {
+async function criar(req, res) {
     try {
-        const novoAluno = AlunoModel.criar(req.body);
-        res.status(RESP_HTTP.CREATED).set('Location', '/api/alunos/' + novoAluno.id).json(novoAluno);
+        const aluno = await db.Aluno.create(req.body);
+        res.status(RESP_HTTP.CREATED).json(aluno);
     } catch (err) {
-        res.status(RESP_HTTP.BAD_REQUEST).json({ erro: err.message });
+        throw err; // erro inesperado asyncHandler captura e retorna 500
     }
 }
 
-function atualizar(req, res) {
-    const id = helper.obterId(req, res);
-    if (id === null) return;
-    const aluno = AlunoModel.atualizar(id, req.body);
-    if (!aluno) return res.status(RESP_HTTP.NOT_FOUND).json({ erro: 'Aluno não encontrado' });
-    res.status(RESP_HTTP.OK).json(aluno);
+
+async function atualizar(req, res) {
+    try {
+        const id = helper.obterId(req, res);
+        if (id === null) return;
+
+        const aluno = await db.Aluno.findByPk(id);
+        if (!aluno) return res.status(RESP_HTTP.NOT_FOUND).json({ erro: 'Aluno não encontrado' });
+
+        const { nome, matricula, id_curso, ativo } = req.body;
+        if (nome      !== undefined) aluno.nome      = nome;
+        if (matricula !== undefined) aluno.matricula = matricula;
+        if (id_curso  !== undefined) aluno.id_curso  = id_curso;
+        if (ativo     !== undefined) aluno.ativo     = ativo;
+
+        await aluno.save();
+        res.status(RESP_HTTP.OK).json(aluno);
+    } catch (err) {
+        throw err;
+    }
 }
 
-function atualizarParcial(req, res) {
-    const id = helper.obterId(req, res);
-    if (id === null) return;
-    const aluno = AlunoModel.atualizarParcial(id, req.body);
-    if (!aluno) return res.status(RESP_HTTP.NOT_FOUND).json({ erro: 'Aluno não encontrado' });
-    res.status(RESP_HTTP.OK).json(aluno);
+async function atualizarParcial(req, res) {
+    try {
+        const id = helper.obterId(req, res);
+        if (id === null) return;
+
+        const aluno = await db.Aluno.findByPk(id);
+        if (!aluno) return res.status(RESP_HTTP.NOT_FOUND).json({ erro: 'Aluno não encontrado' });
+
+        await aluno.update(req.body);
+        res.status(RESP_HTTP.OK).json(aluno);
+    } catch (err) {
+        throw err;
+    }
 }
 
-function remover(req, res) {
-    const id = helper.obterId(req, res);
-    if (id === null) return;
-    const ok = AlunoModel.remover(id);
-    if (!ok) return res.status(RESP_HTTP.NOT_FOUND).json({ erro: 'Aluno não encontrado' });
-    res.status(RESP_HTTP.NO_CONTENT).send();
+async function remover(req, res) {
+    try {
+        const id = helper.obterId(req, res);
+        if (id === null) return;
+
+        const qtd = await db.Aluno.destroy({ where: { id } });
+        if (qtd === 0) return res.status(RESP_HTTP.NOT_FOUND).json({ erro: 'Aluno não encontrado' });
+        res.status(RESP_HTTP.NO_CONTENT).send();
+    } catch (err) {
+        throw err;
+    }
 }
 
 module.exports = { listar, buscar, buscarCompleto, criar, atualizar, atualizarParcial, remover };

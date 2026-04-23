@@ -1,6 +1,7 @@
 const express = require('express');
 const alunoRoutes = require('./routes/alunoRoutes');
 const disciplinaRoutes = require('./routes/disciplinaRoutes');
+const { errorHandler } = require('./middlewares/errorHandler.js');
 
 const app = express();
 app.use(express.json());
@@ -9,10 +10,6 @@ app.use(express.json());
 app.use('/api/alunos', alunoRoutes);
 app.use('/api/disciplinas', disciplinaRoutes);
 
-// handler global de erros
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(err.statusCode || 500).json({ erro: err.message || 'Erro interno' });
-});
+app.use(errorHandler);
 
 module.exports = app;
