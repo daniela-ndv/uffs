@@ -20,7 +20,7 @@ request:
       value: http://localhost:3000
 
 docs:
-  content: Collection completa para testar as rotas de alunos e disciplinas
+  content: Collection completa para testar as rotas de alunos, cursos, disciplinas e matriculas
   type: text/markdown
 bundled: false
 extensions:

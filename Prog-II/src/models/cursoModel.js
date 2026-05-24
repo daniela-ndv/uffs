@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     // Associações definidas aqui, mas executadas pelo index.js
     // depois que todos os models foram carregados
     Curso.associate = function (models) {
+        Curso.hasMany(models.Aluno, { foreignKey: 'id_curso', sourceKey: 'id' });
         Curso.hasMany(models.Matricula, { foreignKey: 'id_curso', sourceKey: 'id' });
     };
     

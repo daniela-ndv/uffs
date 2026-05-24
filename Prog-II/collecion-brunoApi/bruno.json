@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "name": "Coleção CRUD Alunos e Disciplinas",
+  "name": "Coleção CRUD Alunos, Cursos, Disciplinas e Matrículas",
   "type": "collection",
   "ignore": [
     "node_modules",

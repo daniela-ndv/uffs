@@ -2,7 +2,7 @@
 
 const express = require('express');
 const router = express.Router();
-const DisciplinaController = require('../controllers/disciplinaCotroller');
+const DisciplinaController = require('../controllers/disciplinaController');
 const { asyncHandler } = require('../middlewares/asyncHandler');
 
 router.get('/', asyncHandler(DisciplinaController.listar));

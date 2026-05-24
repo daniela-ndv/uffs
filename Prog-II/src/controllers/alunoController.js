@@ -8,18 +8,31 @@ const helper = require('./helpers');
 
 async function listar(req, res) {
     try{
-        const { nome, pagina = 1, porPagina = 20 } = req.query;
+        const { nome, curso, completo, pagina = 1, porPagina = 20 } = req.query;
         const where = {};
         if (nome) where.nome = { [Op.iLike]: '%' + nome + '%' };
 
+        const include = [
+            {
+                model: db.Curso,
+                required: Boolean(curso),
+                ...(curso ? { where: { descricao: { [Op.iLike]: '%' + curso + '%' } } } : {}),
+            },
+        ];
+
+        if (completo === 'true') {
+            include.push({ model: db.Matricula });
+        }
+
         const { count, rows } = await db.Aluno.findAndCountAll({
             where,
-            include: [{ model: db.Curso}],
-            limit: parseInt(porPagina),
-            offset: (parseInt(pagina) - 1) * parseInt(porPagina),
+            include,
+            limit: Number.parseInt(porPagina, 10),
+            offset: (Number.parseInt(pagina, 10) - 1) * Number.parseInt(porPagina, 10),
             order: [['nome', 'ASC']],
+            distinct: true,
         });
-        res.status(RESP_HTTP.OK).json({ total: count, pagina: parseInt(pagina), alunos: rows });
+        res.status(RESP_HTTP.OK).json({ total: count, pagina: Number.parseInt(pagina, 10), alunos: rows });
     } catch (err) {
         throw err;
     }

@@ -1,11 +1,11 @@
 info:
-  name: GET - Buscar dados completos
+  name: GET - Buscar por ID
   type: http
-  seq: 8
+  seq: 2
 
 http:
   method: GET
-  url: "{{baseUrl}}/api/alunos/1/completo"
+  url: "{{baseUrl}}/api/matriculas/1"
   auth: inherit
 
 settings:

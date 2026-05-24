@@ -1,11 +1,11 @@
 info:
-  name: POST - Criar novo
+  name: PATCH - Atualizar parcial
   type: http
-  seq: 4
+  seq: 5
 
 http:
-  method: POST
-  url: "{{baseUrl}}/api/alunos"
+  method: PATCH
+  url: "{{baseUrl}}/api/matriculas/1"
   headers:
     - name: Content-Type
       value: application/json
@@ -13,9 +13,8 @@ http:
     type: json
     data: |-
       {
-        "nome": "Fulano",
-        "matricula": "2026111",
-        "id_curso": 1
+        "nota": 7.5,
+        "situacao": "CURSANDO"
       }
   auth: inherit
 

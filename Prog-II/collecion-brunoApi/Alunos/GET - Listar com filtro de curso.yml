@@ -5,10 +5,10 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/api/alunos?curso=CC"
+  url: "{{baseUrl}}/api/alunos?curso=Ciencia da Computacao"
   params:
     - name: curso
-      value: CC
+      value: Ciencia da Computacao
       type: query
   auth: inherit
 

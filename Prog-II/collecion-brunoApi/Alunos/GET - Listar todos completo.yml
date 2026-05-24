@@ -5,7 +5,11 @@ info:
 
 http:
   method: GET
-  url: "{{baseUrl}}/api/alunos/1/completo"
+  url: "{{baseUrl}}/api/alunos?completo=true"
+  params:
+    - name: completo
+      value: "true"
+      type: query
   auth: inherit
 
 settings:

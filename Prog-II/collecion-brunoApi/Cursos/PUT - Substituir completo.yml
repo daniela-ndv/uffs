@@ -1,11 +1,11 @@
 info:
-  name: POST - Criar novo
+  name: PUT - Substituir completo
   type: http
   seq: 4
 
 http:
-  method: POST
-  url: "{{baseUrl}}/api/alunos"
+  method: PUT
+  url: "{{baseUrl}}/api/cursos/1"
   headers:
     - name: Content-Type
       value: application/json
@@ -13,9 +13,8 @@ http:
     type: json
     data: |-
       {
-        "nome": "Fulano",
-        "matricula": "2026111",
-        "id_curso": 1
+        "id": 1,
+        "descricao": "Ciencia da Computacao Atualizado"
       }
   auth: inherit
 

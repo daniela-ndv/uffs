@@ -13,7 +13,8 @@ http:
     type: json
     data: |-
       {
-        "curso": "SI"
+        "id_curso": 2,
+        "ativo": true
       }
   auth: inherit
 
