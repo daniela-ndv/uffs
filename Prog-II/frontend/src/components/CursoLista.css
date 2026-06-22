@@ -1,0 +1,101 @@
+.curso-lista-section {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+.curso-lista-section h2 {
+    margin: 0 0 1.5rem;
+    font-size: 1.25rem;
+    color: #1a1a2e;
+    border-bottom: 2px solid #4f72c4;
+    padding-bottom: 0.5rem;
+}
+
+.status {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.status.erro {
+    color: #b91c1c;
+}
+
+.status.vazio {
+    color: #888;
+    font-style: italic;
+}
+
+.curso-tabela {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.curso-tabela th,
+.curso-tabela td {
+    padding: 0.7rem 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.curso-tabela th {
+    background: #f0f4ff;
+    color: #333;
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.curso-tabela tbody tr:hover {
+    background: #f8f9ff;
+}
+
+.curso-tabela td:first-child {
+    width: 80px;
+    color: #666;
+    font-variant-numeric: tabular-nums;
+}
+
+.acoes-celula {
+    width: 150px;
+    white-space: nowrap;
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+}
+
+.btn-acao {
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: opacity 0.2s, background 0.2s;
+}
+
+.btn-acao:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-acao.editar {
+    background: #e8f0fe;
+    color: #3a5ba8;
+}
+
+.btn-acao.editar:hover:not(:disabled) {
+    background: #c7d8fc;
+}
+
+.btn-acao.excluir {
+    background: #fde8e8;
+    color: #b91c1c;
+}
+
+.btn-acao.excluir:hover:not(:disabled) {
+    background: #fca5a5;
+}

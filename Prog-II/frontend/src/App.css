@@ -1,0 +1,59 @@
+.app {
+    min-height: 100vh;
+    background: #f0f4ff;
+    display: flex;
+    flex-direction: column;
+}
+
+.app-header {
+    background: #1a1a2e;
+    color: #fff;
+    padding: 1.5rem 2rem;
+    text-align: center;
+}
+
+.app-header h1 {
+    margin: 0;
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+}
+
+.app-header p {
+    margin: 0.25rem 0 0;
+    font-size: 0.875rem;
+    color: #a0aec0;
+}
+
+/* Navegação por abas */
+.app-nav {
+    background: #16213e;
+    display: flex;
+    gap: 0;
+    padding: 0 1.5rem;
+}
+
+.aba {
+    padding: 0.85rem 1.4rem;
+    background: transparent;
+    color: #a0aec0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    border: none;
+    border-bottom: 3px solid transparent;
+    cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+}
+
+.aba:hover      { color: #fff; }
+.aba-ativa      { color: #fff; border-bottom-color: #4f72c4; }
+
+.app-main {
+    max-width: 800px;
+    width: 100%;
+    margin: 2rem auto;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}

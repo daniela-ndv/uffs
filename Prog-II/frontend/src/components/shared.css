@@ -1,0 +1,175 @@
+/* Estilos compartilhados por todos os CRUDs */
+
+.crud-section {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+    padding: 2rem;
+}
+
+.crud-section h2 {
+    margin: 0 0 1.5rem;
+    font-size: 1.25rem;
+    color: #1a1a2e;
+    border-bottom: 2px solid #4f72c4;
+    padding-bottom: .5rem;
+}
+
+/* Formulário */
+.crud-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+}
+
+.campo label {
+    font-size: .875rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.campo input,
+.campo select {
+    padding: .6rem .75rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    background: #fff;
+    transition: border-color .2s, box-shadow .2s;
+}
+
+.campo input:focus,
+.campo select:focus {
+    outline: none;
+    border-color: #4f72c4;
+    box-shadow: 0 0 0 3px rgba(79,114,196,.15);
+}
+
+.campo input:disabled,
+.campo select:disabled {
+    background: #f5f5f5;
+    cursor: not-allowed;
+}
+
+.campo-linha {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.campo-checkbox {
+    flex-direction: row;
+    align-items: center;
+    gap: .5rem;
+}
+
+.campo-checkbox input[type="checkbox"] {
+    width: 1.1rem;
+    height: 1.1rem;
+    cursor: pointer;
+    padding: 0;
+}
+
+/* Mensagens */
+.mensagem {
+    padding: .6rem .75rem;
+    border-radius: 6px;
+    font-size: .9rem;
+    margin: 0;
+}
+
+.mensagem.erro  { background: #fde8e8; color: #b91c1c; border: 1px solid #fca5a5; }
+.mensagem.sucesso { background: #dcfce7; color: #15803d; border: 1px solid #86efac; }
+
+/* Botões do form */
+.acoes-form {
+    display: flex;
+    gap: .75rem;
+    align-items: center;
+}
+
+.btn-submit {
+    padding: .65rem 1.5rem;
+    background: #4f72c4;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background .2s, opacity .2s;
+}
+
+.btn-submit:hover:not(:disabled) { background: #3a5ba8; }
+.btn-submit:disabled              { opacity: .6; cursor: not-allowed; }
+
+.btn-cancelar {
+    padding: .65rem 1.25rem;
+    background: transparent;
+    color: #555;
+    font-size: 1rem;
+    font-weight: 600;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background .2s, border-color .2s;
+}
+
+.btn-cancelar:hover:not(:disabled) { background: #f0f0f0; border-color: #aaa; }
+.btn-cancelar:disabled              { opacity: .6; cursor: not-allowed; }
+
+/* Tabela */
+.status        { font-size: .95rem; color: #555; }
+.status.erro   { color: #b91c1c; }
+.status.vazio  { color: #888; font-style: italic; }
+
+.crud-tabela {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .9rem;
+}
+
+.crud-tabela th,
+.crud-tabela td {
+    padding: .65rem .9rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.crud-tabela th {
+    background: #f0f4ff;
+    color: #333;
+    font-weight: 600;
+    font-size: .8rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+}
+
+.crud-tabela tbody tr:hover { background: #f8f9ff; }
+
+.acoes-celula {
+    white-space: nowrap;
+}
+
+.btn-acao {
+    padding: .3rem .65rem;
+    font-size: .78rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: .35rem;
+    transition: opacity .2s, background .2s;
+}
+
+.btn-acao:disabled            { opacity: .5; cursor: not-allowed; }
+.btn-acao.editar              { background: #e8f0fe; color: #3a5ba8; }
+.btn-acao.editar:hover:not(:disabled) { background: #c7d8fc; }
+.btn-acao.excluir             { background: #fde8e8; color: #b91c1c; }
+.btn-acao.excluir:hover:not(:disabled) { background: #fca5a5; }

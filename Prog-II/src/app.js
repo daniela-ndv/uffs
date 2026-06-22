@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const alunoRoutes = require('./routes/alunoRoutes');
 const disciplinaRoutes = require('./routes/disciplinaRoutes');
 const cursoRoutes = require('./routes/cursoRoutes');
@@ -6,6 +7,7 @@ const matriculaRoutes = require('./routes/matriculaRoutes');
 const { errorHandler } = require('./middlewares/errorHandler.js');
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 // Monta o router no caminho base
