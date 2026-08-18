@@ -6,7 +6,7 @@
 
 int main(){ 
     Circulo c1(5.0);
-    Circulo c2(2.0);
+    Circulo c2(1.0);
 
     std::cout << "Círculo 1: " << std::endl;
     c1.imprime_area();
