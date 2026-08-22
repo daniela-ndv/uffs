@@ -82,8 +82,11 @@ void Grafo::imprime_grafo(){
 };
 
 bool Grafo::eh_passeio(vector<int> sequencia){
-    if(sequencia.size() < 2){
+    if(sequencia.size() < 1){ 
         return false;
+    }
+    if(sequencia.size() == 1){ 
+        return true; // com 1 vertice é passeio
     }
 
     for(int i = 0; i < (int)sequencia.size() - 1; i++){
@@ -121,6 +124,32 @@ bool Grafo::eh_caminho(vector<int> sequencia){
     }
 
     return true;
+};
+
+int Grafo::grau(int v){
+    try { 
+        valida_vertice(v);
+    }
+    catch (...) {
+        throw_with_nested(runtime_error("Erro na operação grau(int): o vértice é inválido!"));
+    }
+
+    int grau = 0;
+
+    for(int i = 0; i < num_vertices_; i++){
+        int temAresta = 0;
+        temAresta = matriz_adj_[v][i];
+
+        if(temAresta){
+            grau++;
+        }
+    }
+
+    return grau; 
+};
+
+int Grafo::grauMin(){
+
 };
 
 void Grafo::valida_vertice(int v){

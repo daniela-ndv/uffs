@@ -28,6 +28,15 @@ class Grafo {
         /* Passeio onde não há vértices repetidos */
         bool eh_caminho(std::vector<int> sequencia);
 
+        /* Retorna o grau de um vértice (número de arestas que estão ligadas a ele)*/
+        int grau(int v);
+
+        /* Retorna o grau mínimo de um vértice */
+        int grauMin();
+
+        /* Retorna o grau máximo de um vértice */
+        //int grauMax();
+
     private:
        std::vector<std::vector<int>> matriz_adj_;
        int num_vertices_;

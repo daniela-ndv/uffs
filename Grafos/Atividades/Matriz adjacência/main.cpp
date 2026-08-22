@@ -14,42 +14,52 @@ void print_exception(const exception &e, int level = 0) {
     }
 }
 
-/* Grafo passado por referência para alterar o mesmo objeto da chamada da função (na main) */
-void tenta_inserir(Grafo &g, Aresta e) {
-    try {
-        g.insere_aresta(e);
-    } catch (const exception &ex) {
-        print_exception(ex);
-    }
-}
-
 int main() {
-    Grafo g(6);
+    try{
+        Grafo g(6);
 
-    tenta_inserir(g, Aresta(0, 2));
+        g.insere_aresta(Aresta(0, 1));
 
-    g.imprime_grafo();
+        g.imprime_grafo();
 
-    tenta_inserir(g, Aresta(-1, -2));
-    tenta_inserir(g, Aresta(5, 7));
-    tenta_inserir(g, Aresta(5, 1));
-    tenta_inserir(g, Aresta(0, 4));
-    tenta_inserir(g, Aresta(2, 5));
-    tenta_inserir(g, Aresta(1, 4));
+        //g.insere_aresta(Aresta(-1, -2));
+        //g.insere_aresta(Aresta(5, 7));
+        g.insere_aresta(Aresta(1, 3));
+        g.insere_aresta(Aresta(0, 2));
+        g.insere_aresta(Aresta(0, 4));
+        g.insere_aresta(Aresta(4, 2));
+        g.insere_aresta(Aresta(1, 4));
+        g.insere_aresta(Aresta(3, 4));
+        g.insere_aresta(Aresta(3, 5));
 
-    g.imprime_grafo();
+        g.imprime_grafo();
 
-    bool p1 = g.eh_passeio({0, 2, 3, 5, 1});
-    cout << "\neh_passeio({0, 2, 5, 1}) " << p1 << "\n";
+        bool p1 = g.eh_passeio({2, 0, 1, 4, 0});
+        cout << "\neh_passeio({2, 0, 1, 4, 0}) " << p1 << "\n";
 
-    bool p2 = g.eh_passeio({0, 2, 5, 1, 4, 0});
-    cout << "eh_passeio({0, 2, 5, 1, 4, 0}): " << p2 << "\n";
+        bool p2 = g.eh_passeio({2, 4, 5});
+        cout << "eh_passeio({2, 4, 5}): " << p2 << "\n";
 
-    bool c1 = g.eh_caminho({0, 2, 5, 1});
-    cout << "eh_caminho({0, 2, 5, 1}): " << c1 << "\n";
+        bool c1 = g.eh_caminho({2, 0, 1, 4, 0});
+        cout << "eh_caminho({2, 0, 1, 4, 0}): " << c1 << "\n";
 
-    bool c2 = g.eh_caminho({0, 2, 5, 1, 4, 0});
-    cout << "eh_caminho({0, 2, 5, 1, 4, 0}): " << c2 << "\n";
+        bool c2 = g.eh_caminho({5, 3, 4});
+        cout << "eh_caminho({5, 3, 4}): " << c2 << "\n";
+
+        cout << "\nGraus das arestas do grafo g: \n";
+
+        for(int i = 0; i < g.num_vertices(); i++){
+            int grau_i = 0;
+            grau_i = g.grau(i);
+
+            cout << "grau v = " << i << ": " << grau_i << "\n";
+        }
+    
+    }
+    catch(const exception &e){
+        print_exception(e);
+    }
 
     return 0;
+    
 }
