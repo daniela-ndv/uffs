@@ -35,7 +35,7 @@ class Grafo {
         int grauMin();
 
         /* Retorna o grau máximo de um vértice */
-        //int grauMax();
+        int grauMax();
 
     private:
        std::vector<std::vector<int>> matriz_adj_;

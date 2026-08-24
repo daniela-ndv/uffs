@@ -54,6 +54,12 @@ int main() {
 
             cout << "grau v = " << i << ": " << grau_i << "\n";
         }
+
+        int grauMin = g.grauMin();
+        cout << "\nGrau mínimo de g: " << grauMin << "\n";
+
+        int grauMax = g.grauMax();
+        cout << "Grau máximo de g: " << grauMax << "\n";
     
     }
     catch(const exception &e){

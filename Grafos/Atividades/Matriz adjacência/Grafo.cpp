@@ -149,8 +149,34 @@ int Grafo::grau(int v){
 };
 
 int Grafo::grauMin(){
+    int grauMin = num_arestas_; 
 
+    for(int i = 0; i < num_vertices_; i++){
+        int grau = 0;
+        grau = Grafo::grau(i);
+
+        if(grau < grauMin){
+            grauMin = grau;
+        } 
+    }
+
+    return grauMin;
 };
+
+int Grafo::grauMax(){
+    int grauMax = 0;
+
+    for(int i = 0; i < num_vertices_; i++){
+        int grau = 0;
+        grau = Grafo::grau(i);
+
+        if(grau > grauMax){
+            grauMax = grau;
+        }
+    }
+
+    return grauMax;
+}
 
 void Grafo::valida_vertice(int v){
     if((v < 0) || (v >= num_vertices_)){
