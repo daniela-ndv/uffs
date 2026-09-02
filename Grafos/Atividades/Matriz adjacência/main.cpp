@@ -17,10 +17,11 @@ void print_exception(const exception &e, int level = 0) {
 int main() {
     try{
         Grafo g(6);
+        Grafo g2(4);
 
         g.insere_aresta(Aresta(0, 1));
 
-        g.imprime_grafo();
+        //g.imprime_grafo();
 
         //g.insere_aresta(Aresta(-1, -2));
         //g.insere_aresta(Aresta(5, 7));
@@ -32,9 +33,16 @@ int main() {
         g.insere_aresta(Aresta(3, 4));
         g.insere_aresta(Aresta(3, 5));
 
+        cout << "Grafo g:\n";
         g.imprime_grafo();
 
-        bool p1 = g.eh_passeio({2, 0, 1, 4, 0});
+        g2.insere_aresta(Aresta(0, 1));
+        g2.insere_aresta(Aresta(2, 3));
+
+        cout << "\nGrafo g2:\n";
+        g2.imprime_grafo();
+
+        /*bool p1 = g.eh_passeio({2, 0, 1, 4, 0});
         cout << "\neh_passeio({2, 0, 1, 4, 0}) " << p1 << "\n";
 
         bool p2 = g.eh_passeio({2, 4, 5});
@@ -59,8 +67,20 @@ int main() {
         cout << "\nGrau mínimo de g: " << grauMin << "\n";
 
         int grauMax = g.grauMax();
-        cout << "Grau máximo de g: " << grauMax << "\n";
-    
+        cout << "Grau máximo de g: " << grauMax << "\n"; */
+
+        cout << "\n";
+
+        int marcado[6] = {0};
+        bool temCaminho = g.caminho(0, 5, marcado, 0);
+        cout << "Tem caminho (0, 5) em g: " << temCaminho << "\n";
+
+        cout << "\n";
+        
+        int marcado2[4] = {0};
+        bool temCaminho2 = g2.caminho(0, 2, marcado2, 0);
+        cout << "Tem caminho (0, 2) em g2: " << temCaminho2 << "\n";
+
     }
     catch(const exception &e){
         print_exception(e);

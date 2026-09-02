@@ -37,6 +37,9 @@ class Grafo {
         /* Retorna o grau máximo de um vértice */
         int grauMax();
 
+        /* Existência de um caminho entre dois vértices */
+        bool caminho(int v, int w, int marcado[], int cont); 
+
     private:
        std::vector<std::vector<int>> matriz_adj_;
        int num_vertices_;

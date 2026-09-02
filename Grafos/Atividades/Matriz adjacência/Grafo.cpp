@@ -68,7 +68,6 @@ void Grafo::remove_aresta(Aresta e){
 };
 
 void Grafo::imprime_grafo(){
-    cout << "Grafo:\n";
 
     for(int v = 0; v < num_vertices_; v++){
         cout << v << ": ";
@@ -178,6 +177,28 @@ int Grafo::grauMax(){
     return grauMax;
 }
 
+bool Grafo::caminho(int v, int w, int marcado[], int cont){
+
+    for (int i = 0; i < cont * 2; i++) printf("-");    // cada nível de profundidade imprime 2 traços
+    printf("caminho(%d, %d)\n", v, w);
+
+    if (v == w){ 
+        return true;
+    }
+    
+    marcado[v] = 1;
+
+    for (int u = 0; u < num_vertices_; u++){
+        if (matriz_adj_[v][u] != 0 && marcado[u] == 0){
+            if (caminho(u, w, marcado, cont + 1)){
+                return true;
+            }
+        }
+    }
+
+    return false;
+};
+
 void Grafo::valida_vertice(int v){
     if((v < 0) || (v >= num_vertices_)){
         throw out_of_range("Índice de vértice inválido: " + to_string(v));
@@ -188,3 +209,4 @@ void Grafo::valida_aresta(Aresta e){
     valida_vertice(e.v1);
     valida_vertice(e.v2);
 };
+
