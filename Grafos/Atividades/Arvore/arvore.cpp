@@ -10,6 +10,13 @@
 using namespace std;
 
 void inserir_pai(int nodo_pai, int nodo_filho, vector<int> &v_pai){
+    if(nodo_pai == nodo_filho){
+        cout << "Não foi possível adicionar. Isso criaria um ciclo.\n";
+        return;
+
+        // TODO: Validar ciclo de forma mais robusta (além do próprio nodo)
+    }
+
     if (nodo_pai == -1){
         v_pai[nodo_filho] = nodo_pai;
         cout << "Nó raiz: " << nodo_filho << "\n";
