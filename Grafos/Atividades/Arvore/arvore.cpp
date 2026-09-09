@@ -10,12 +10,8 @@
 using namespace std;
 
 void inserir_pai(int nodo_pai, int nodo_filho, vector<int> &v_pai){
-    if(nodo_pai == nodo_filho){
-        cout << "Não foi possível adicionar. Isso criaria um ciclo.\n";
-        return;
-
-        // TODO: Validar ciclo de forma mais robusta (além do próprio nodo)
-    }
+    
+    // TODO: validar limites de nodo_pai e nodo_filho (0 <= x < NUM_VERTICES) antes de qualquer acesso ao vetor, para evitar acesso fora dos limites.
 
     if (nodo_pai == -1){
         v_pai[nodo_filho] = nodo_pai;
@@ -24,6 +20,14 @@ void inserir_pai(int nodo_pai, int nodo_filho, vector<int> &v_pai){
     } 
 
     if(v_pai[nodo_pai] != -2){
+
+        if(nodo_pai == nodo_filho){
+            cout << "Não foi possível adicionar. Isso criaria um ciclo.\n";
+            return;
+
+            // TODO: Validar ciclo de forma mais robusta (além do próprio nodo onde nodo_pai == nodo_filho).
+        }
+
         v_pai[nodo_filho] = nodo_pai;
         cout << "Pai " << nodo_pai << " inserido para o nó " << nodo_filho << "\n";
         return;
@@ -55,6 +59,9 @@ int main(){
 
     cout << "\nVetor pai: " << "\n";
     for (int i = 0; i < NUM_VERTICES; i++){
+
+        // TODO: se v_pai[i] == -2, o nó nunca foi inserido, logo, o grafo não é conexo pois existe vértice isolado. Reportar isso aqui ou em uma validação separada.
+
         if (nodos_pai[i] == -1){
             cout << "No v" << i << " -> É a raiz\n";
         } else {
