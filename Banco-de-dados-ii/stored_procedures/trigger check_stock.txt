@@ -1,0 +1,35 @@
+CREATE OR REPLACE FUNCTION  check_stock () RETURNS trigger AS $check_stock$
+DECLARE
+      pqtty product.pqty%type;
+      dif int;
+BEGIN
+	IF TG_OP='DELETE' THEN
+		UPDATE product SET pqty = pqty + OLD.sqty WHERE pid = OLD.pid;
+		RETURN OLD;
+	END IF;
+	
+	SELECT pqty INTO pqtty FROM product WHERE pid = NEW.pid;
+	
+	IF TG_OP='INSERT' THEN 
+		IF NEW.sqty > pqtty THEN
+			RAISE EXCEPTION 'No Stock for product %', NEW.pid;
+   	 	END IF;
+   	 	
+		UPDATE product SET pqty = pqty - NEW.sqty WHERE pid = NEW.pid;
+		
+	ELSIF TG_OP='UPDATE' THEN
+		IF NEW.sqty > (pqtty + OLD.sqty) THEN
+			RAISE EXCEPTION 'No Stock for product %', NEW.pid;
+   	 	END IF;
+   	 	
+		dif := OLD.sqty - NEW.sqty;
+		UPDATE product SET pqty = pqty + dif WHERE pid = NEW.pid;
+	END IF;
+	
+	RETURN NEW;
+END;
+$check_stock$ LANGUAGE plpgsql;
+
+
+
+
