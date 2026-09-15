@@ -40,6 +40,12 @@ class Grafo {
         /* Existência de um caminho entre dois vértices */
         bool caminho(int v, int w, int marcado[], int cont); 
 
+        /* Busca em profundidade */
+        void busca_profundidade(int v, int marcado[]);
+
+        /* Busca em largura: pai[] deve ser inicializado com -2 (não visitado) antes da chamada */
+        void busca_largura(int v, int pai[], int dist[]); 
+
     private:
        std::vector<std::vector<int>> matriz_adj_;
        int num_vertices_;

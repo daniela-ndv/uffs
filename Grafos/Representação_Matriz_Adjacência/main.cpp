@@ -81,6 +81,30 @@ int main() {
         bool temCaminho2 = g2.caminho(0, 2, marcado2, 0);
         cout << "Tem caminho (0, 2) em g2: " << temCaminho2 << "\n";
 
+        cout << "\nBusca em profundidade a partir de v=0 em g:\n";
+        int marcado_dfs[6] = {0};
+        g.busca_profundidade(0, marcado_dfs);
+
+        cout << "\nBusca em largura a partir de v=0 em g:\n";
+        int pai[6];
+        int dist[6];
+        for (int i = 0; i < g.num_vertices(); i++) {
+            pai[i] = -2; // -2 indica vértice ainda não visitado
+            dist[i] = 0;
+        }
+        g.busca_largura(0, pai, dist);
+
+        cout << "\nVetor pai resultante da busca em largura:\n";
+        for (int i = 0; i < g.num_vertices(); i++) {
+            if (pai[i] == -1) {
+                cout << "v" << i << " -> É a raiz\n";
+            } else if (pai[i] == -2) {
+                cout << "v" << i << " -> Não alcançado a partir de v0\n";
+            } else {
+                cout << "v" << i << " -> Pai: v" << pai[i] << ", distância: " << dist[i] << "\n";
+            }
+        }
+
     }
     catch(const exception &e){
         print_exception(e);

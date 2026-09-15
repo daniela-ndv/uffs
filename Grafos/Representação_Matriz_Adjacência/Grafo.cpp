@@ -3,6 +3,7 @@
 #include <stdexcept>
 #include <string>
 #include <iostream>
+#include <queue>
 
 using namespace std;
 
@@ -210,3 +211,35 @@ void Grafo::valida_aresta(Aresta e){
     valida_vertice(e.v2);
 };
 
+void Grafo::busca_profundidade(int v, int marcado[]) {
+    printf("%d\n", v);
+    marcado[v] = 1;
+    for (int u = 0; u < num_vertices_; u++)
+    if (matriz_adj_[v][u] != 0)
+    if (marcado[u] == 0)
+    busca_profundidade(u, marcado);
+}
+
+void Grafo::busca_largura(int v, int pai[], int dist[]) {
+    // O vetor pai já deve chegar inicializado com -2 (não visitado); usa-se
+    // pai[u] == -2 como marcação de visitado, dispensando um vetor marcado à parte
+    queue<int> fila;
+
+    pai[v] = -1;
+    dist[v] = 0;
+    fila.push(v);
+
+    while (!fila.empty()) {
+        int w = fila.front();
+        fila.pop();
+        printf("%d\n", w);
+
+        for (int u = 0; u < num_vertices_; u++)
+            if (matriz_adj_[w][u] != 0)
+                if (pai[u] == -2) {
+                    pai[u] = w;
+                    dist[u] = dist[w] + 1;
+                    fila.push(u);
+                }
+    }
+}

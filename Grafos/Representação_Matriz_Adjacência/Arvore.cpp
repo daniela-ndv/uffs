@@ -2,10 +2,9 @@
  * Representação computacional de uma árvore usando lista de um vetor pai
  */
 
+#include "Arvore.h"
 #include <stdio.h>
 #include <iostream>
-#include <vector>
-#define NUM_VERTICES 14
 
 using namespace std;
 
