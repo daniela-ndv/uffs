@@ -215,9 +215,9 @@ void Grafo::busca_profundidade(int v, int marcado[]) {
     printf("%d\n", v);
     marcado[v] = 1;
     for (int u = 0; u < num_vertices_; u++)
-    if (matriz_adj_[v][u] != 0)
-    if (marcado[u] == 0)
-    busca_profundidade(u, marcado);
+        if (matriz_adj_[v][u] != 0)
+            if (marcado[u] == 0)
+                busca_profundidade(u, marcado);
 }
 
 void Grafo::busca_largura(int v, int pai[], int dist[]) {
